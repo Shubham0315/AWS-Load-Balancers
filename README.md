@@ -28,31 +28,38 @@ Load Balancer
 
 - Request started with user accessing my profile
 
-1. Application Layer
+Application Layer
+-
   - User while opening the browser will initiate an HTTP request which is "Application layer" (layer7). Here we decide which protocol to use to access server. Protocols are HTTP, SFTP, FTP.
   - So after opening browser, we initiate an HTTP request as our browser is HTTP client.
   - If we dont use browser and use postman, there we can define which protocol we can use.
 
-2. Presentation Layer
+Presentation Layer
+-
   - From application layer, our request goes to presentation layer.
   - The request we're sending needs to be secure or non-secure.
   - For secure one request has to be SSL/TLS based. This is done by presentation layer which takes care of encoding/encrypting our request
 
-3. Session Layer
+Session Layer
+-
   - Then request goes to session layer where we create session for our request.
   - Server will here understand things about session that user has initiated. Here we get details like time of request, type, etc.
 
-4. Transport Layer
+Transport Layer
+-
   - This layer is very critical where request split into multiple packets. This layer ensures request goes from user/client to server securely and in packets of small size.
   - So when we send huge requests to server, there can be delay in response received from server. So if we split request in small packets, server can easily read packets and send response in small packets
 
-5. Network Layer
+Network Layer
+-
   - The small packets have to travel from user to server through multiple routers. Request goes to multiple routers.
 
-6. Data Link Layer
+Data Link Layer
+-
   - Here request goes through one of the routers. Our request before reaching physical layer goes to switch then data center and then physical layer
 
-7. Physical Layer
+Physical Layer
+-
   - Request goes to Physical layer where we have all cables connected to server. Cables to be connected with switch and switch connects to router
 
 - In short, the packet/traffic flow looks like below
