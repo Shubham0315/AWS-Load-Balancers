@@ -16,3 +16,47 @@ Load Balancer
 - If amongst our 3 instances, 1 is more powerful than others, we can send 50% requests to that EC2 and 25-25% to other 2 :- "Ratio Based LB" or "Weight Based LB"
 
 --------------------------------------------------------------------------------------------------------------------------
+
+7 Layers of OSI Model
+-
+- How a packet flows from client to server/how packet flows from 7 layers of OSI model? When we open browser and search any site, how our request travel and reach one of our google servers and response is sent back?
+
+- This entire process happens within 7 layers
+
+- User want to access linkedin/shubham315, he will open browser and search the profile, means user will initiate the request. It will travel over internet and it will reach one of the linkedin server and that server will send response back to user with my profile page. 
+- Internally request from user travels from 7 different layers and reaches server or application. Here different LBs act on different layers of this OSI model.
+
+- Request started with user accessing my profile
+
+1. Application Layer
+  - User while opening the browser will initiate an HTTP request which is "Application layer" (layer7). Here we decide which protocol to use to access server. Protocols are HTTP, SFTP, FTP.
+  - So after opening browser, we initiate an HTTP request as our browser is HTTP client.
+  - If we dont use browser and use postman, there we can define which protocol we can use.
+
+2. Presentation Layer
+  - From application layer, our request goes to presentation layer.
+  - The request we're sending needs to be secure or non-secure.
+  - For secure one request has to be SSL/TLS based. This is done by presentation layer which takes care of encoding/encrypting our request
+
+3. Session Layer
+  - Then request goes to session layer where we create session for our request.
+  - Server will here understand things about session that user has initiated. Here we get details like time of request, type, etc.
+
+4. Transport Layer
+  - This layer is very critical where request split into multiple packets. This layer ensures request goes from user/client to server securely and in packets of small size.
+  - So when we send huge requests to server, there can be delay in response received from server. So if we split request in small packets, server can easily read packets and send response in small packets
+
+5. Network Layer
+  - The small packets have to travel from user to server through multiple routers. Request goes to multiple routers.
+
+6. Data Link Layer
+  - Here request goes through one of the routers. Our request before reaching physical layer goes to switch then data center and then physical layer
+
+7. Physical Layer
+  - Request goes to Physical layer where we have all cables connected to server. Cables to be connected with switch and switch connects to router
+
+- In short, the packet/traffic flow looks like below
+
+Application Layer(7) - Presentation Layer(6) - Session Layer(5) - Transport Layer(4) - Network Layer(3) - Data Link Layer(2) - Physical Layer(1)
+-
+
