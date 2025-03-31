@@ -67,3 +67,62 @@ Physical Layer
 Application Layer(7) - Presentation Layer(6) - Session Layer(5) - Transport Layer(4) - Network Layer(3) - Data Link Layer(2) - Physical Layer(1)
 -
 
+--------------------------------------------------------------------------------------------------------------------------
+
+Types of LB
+-
+- There are 3 types of Load Balancers
+  - Application LB
+  - Network LB
+  - GateWay LB
+- Now depending on LB and 7 OSI layers we'll decide which LB to use :- ALB, NLB, GWLB
+
+- If we want to perform traffic Load balancing on layer 7, use ALB  (Application layer)
+- If we want to perform traffic Load balancing on layer 4, use NLB  (Transport layer)
+
+Application Load Balancer (ALB)
+-
+- L7 will deal with HTTP traffic in this layer. If we want to perform load balancing at HTTP layer, we use ALB. When user initiates request, if we want to intercept user request at layer 7 and decide upon Load balancing depending upon host, path, domain we can use ALB
+- To access amazon.com/payments, my request will go to payment service. If we're accessing LB on amazon.com/transactions, our request will go to "transactions" target group.
+  - So with ALB when we access ALB of amazon.com, we can configure it with custom domain of amazon. User will access amazon on different paths depending upon app. So if request is being sent to amazon, then forward it to one particular server only(payments or transactions).
+  - So ALB makes decision which type of request to go to which server. As we're doing balancing on app level, its called L7 LB
+- At L7, we can intercept HTTP request and read it like what are the request headers, what path user has to access, what is host. We can alo perform ratio based routing.
+- ALB makes decision of routing depending upon HTTP requests that we send.
+- It also performs SSL offloading, reencrypt.
+- Even if we send stale request to LB, LB will initiate secure connection of our server
+
+- ALB is costly as it has advanced capabilities as it intercepts HTTP request and decide which server to forward.
+- It is also slow as ALB analyses our L7 and then request gets forwarded to servers. So there is stoppage in between(latency)
+
+Network Load Balancer (NLB)
+-
+- Suppose, we dont want to perform routing depending on HTTP request that is sent to us.
+- Lets say there is NLB and apps under it. When user sends request to NLB, it cannot intercept our HTTP request, means it wont perform any modifications at Layer 7. But when request comes from L7 to L4, NLB plays critical role in transport layer (L4)
+- L4 routing is needed in game servers, youtube as transport layer transmits data in small chunks and ensures data is transmitted from user/client to server without any latency or issues or loss of data. This is taken care by NLB ensuring low latency and high data transmission. 
+- NLB is used where simple delay is also not expected like gaming, utube, streaming platforms which was there in ALB
+- It performs routing based on TCP/UDP patterns
+- So to perform load balancing without any interruptions, use NLB
+- In real time, request is sent to NLB and depending upon port, IP address will forward requests to our servers
+
+- e.g :- To access youtube, then we can place NLB and depending on request NLB will forward the request.
+- NLB is less costly
+- It is very fast compared to ALB (No latency)
+- It performs routing at TCP/UDP packets
+- ** NLB can create sticky sessions. All request from specific user gets tagged to same server
+
+Gateway Load Balancer (GWLB)
+-
+- Useful when we deal with virtual appliances like VPN, firewall where we can frontface apps with GWLB.
+- If for firewall we do ALB, kind of traffic received by firewall ALB cannot handle. Also ALB/NLB doesn't add security
+- Using virtual applianceslike VPN or firewall, our traffic has to be highly secure which is offered by GWLB which sends highly encrypted packets to virtual appliances.
+- 
+
+When we want to use virtual appliances like VPN or firewall, go for GWLB
+We dont want to route traffic or dont want to apply LB techniques at L7, go for NLB
+If we want to perform advanced LB, go for ALB
+-
+
+--------------------------------------------------------------------------------------------------------------------------
+
+NLB can create sticky sessions. All request from specific user gets tagged to same server. If we're watching long video, all requests goes to one server only from specific user. So we use NLB for content streaming platforms
+-
